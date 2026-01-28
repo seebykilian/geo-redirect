@@ -29,7 +29,7 @@ export default async function handler(request) {
 
   return new Response(null, {
     status: 302,
-    headers: {
+    headers: { 
       Location: redirectUrl,
     },
   });
