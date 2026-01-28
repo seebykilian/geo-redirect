@@ -1,21 +1,36 @@
 export const config = {
-    runtime: "edge",
+  runtime: "edge",
 };
 
-export default function handler(request) {
-    const geo = request.geo || {};
-    const country = geo.country || "unknown";
-    const city = geo.city || "unknown";
+export default async function handler(request) {
+  // 1️⃣ IP depuis Vercel
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
 
-    console.log("Geo:", { country, city });
+  // 2️⃣ Appel API IP
+  let country = "unknown";
+  let city = "unknown";
 
-    const redirectUrl = new URL(request.url).searchParams.get("to")
-        || "https://google.com";
+  try {
+    const res = await fetch(`https://ipapi.co/${ip}/json/`);
+    const data = await res.json();
 
-    return new Response(null, {
-        status: 302,
-        headers: {
-            Location: redirectUrl,
-        },
-    });
+    country = data.country || data.country_name || "unknown";
+    city = data.city || "unknown";
+  } catch (e) {
+    console.log("IP API error");
+  }
+
+  console.log({ ip, country, city });
+
+  const redirectUrl =
+    new URL(request.url).searchParams.get("to") ||
+    "https://swisstransfer.fr";
+
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: redirectUrl,
+    },
+  });
 }
