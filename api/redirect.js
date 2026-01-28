@@ -25,7 +25,7 @@ export default async function handler(request) {
 
   const redirectUrl =
     new URL(request.url).searchParams.get("to") ||
-    "https://swisstransfer.fr";
+    "https://www.swisstransfer.com/d/64062d24-a008-4e6d-b4c5-eaa0e680929e";
 
   return new Response(null, {
     status: 302,
