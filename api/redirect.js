@@ -12,10 +12,10 @@ export default async function handler(request) {
   let city = "unknown";
 
   try {
-    const res = await fetch(`https://ipapi.co/${ip}/json/`);
+    const res = await fetch(`https://ip-intelligence.abstractapi.com/v1/?api_key=4170fc4445234c27948af46214b10866&ip_address=${ip}`);
     const data = await res.json();
 
-    country = data.country || data.country_name || "unknown";
+    country = data.location.country || data.location.country_name || "unknown";
     city = data.city || "unknown";
   } catch (e) {
     console.log("IP API error");
