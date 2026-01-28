@@ -15,8 +15,8 @@ export default async function handler(request) {
     const res = await fetch(`https://ip-intelligence.abstractapi.com/v1/?api_key=4170fc4445234c27948af46214b10866&ip_address=${ip}`);
     const data = await res.json();
 
-    country = data.location.country || data.location.country_name || "unknown";
-    city = data.city || "unknown";
+    country = data.location.country || "unknown";
+    city = data.location.city || "unknown";
   } catch (e) {
     console.log("IP API error");
   }
